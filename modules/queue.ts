@@ -14,7 +14,7 @@ import { ClassStack } from './stack';
      size():number;
  }
 
-export class ClassQueue<T> implements Queue<T>{
+export class ClassQueue<T =any> implements Queue<T>{
     items: any[]=[];    
     enqueue(element: T): void {
         this.items.push(element)

@@ -1,5 +1,6 @@
 import {ClassStack} from './modules/stack';
 import {ClassQueue} from './modules/queue';
+import {ClassLinkedList} from './modules/linkedList';
 
 
 /**
@@ -55,10 +56,10 @@ var divideBy16 = divide(16)
 
 
 /**
- * 队列的实例 优先队列
+ * 队列的实例 优先队列和循环队列
  */
 
-//react fiber 队列
+//优先队列
 class Element{
     public priority:number =0;
     public element:any;
@@ -94,6 +95,59 @@ priorityQueue.enqueue(new Element(4,2) )
 priorityQueue.enqueue(new Element(20,2) )
 priorityQueue.enqueue(new Element(9,2) )
 
-console.log(priorityQueue.items)
 
+//循环队列
 
+function hotPotato(nameList:string[],num:number){
+    var queue = new ClassQueue();
+
+    for(var i=0;i<nameList.length;i++){
+        queue.enqueue(nameList[i])
+    }
+
+    var eliminated = '';
+    while(queue.size()>1){
+        for(var i=0;i<num;i++){
+            queue.enqueue(queue.dequeue());
+        }
+
+        eliminated = queue.dequeue();
+    }
+
+    return queue.dequeue()
+}
+//javascript的任务队列，在我们打开浏览器中打开一个新标签时候，就会创建一个任务队列。这是因为每个标签都是单线程处理所有任务，它被称为事件循环
+//web worker技术 在javascript主线程的控制下，帮助分担计算的任务，并没有i/o功能
+//浏览器环境下js引擎的事件循环机制
+//1执行栈和事件队列
+//2.mascro task 和micro task （宏任务和微任务）
+//属于宏任务的有 setInterval() setTimeout()
+//属于微任务的有 new Promise() new MutaionObserver()
+//当当前执行栈执行完毕时会立刻先处理所有微任务队列中的事件，然后再去宏任务队列中取出一个事件。同一次事件循环中，微任务永远在宏任务之前执行。
+//https://www.cnblogs.com/mqliutie/p/4422247.html 这是讲执行栈的博客
+
+/**
+ * 链表实例
+ */
+class ElementofLinkedList {
+    element:any;
+    next:ElementofLinkedList|null = null
+
+    constructor(element:any){
+        this.element = element;
+    }
+}
+
+var linkedList  = new ClassLinkedList();
+
+linkedList.append(new ElementofLinkedList(1))
+linkedList.append(new ElementofLinkedList(2))
+linkedList.append(new ElementofLinkedList(3))
+linkedList.append(new ElementofLinkedList(4))
+linkedList.append(new ElementofLinkedList(5))
+
+linkedList.insert(0,new ElementofLinkedList(0))
+// linkedList.removeAt(0)
+// console.log(linkedList.head)
+// console.log(linkedList.length)
+// console.log(linkedList.toString())
